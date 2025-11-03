@@ -49,7 +49,6 @@ class MyConfiguration(object):
     self.VERSION = "2.5.4"
 
     self.GITHUB = "https://raw.github.com/xbmc/texturecache/master"
-    self.ANALYTICS_GOOD = "http://goo.gl/BjH6Lj"
 
     self.DEBUG = True if os.environ.get("PYTHONDEBUG", "n").lower()=="y" else False
 
@@ -8173,7 +8172,6 @@ def checkUpdate(argv, forcedCheck=False):
     gLogger.out("Full changelog: %s" % url, newLine=True)
 
 def getLatestVersion(argv):
-  # Need user agent etc. for analytics
   BITS = "64" if platform.architecture()[0] == "64bit" else "32"
   ARCH = "ARM" if platform.machine().lower().startswith("arm") else "x86"
   PLATFORM = platform.system()
@@ -8184,54 +8182,12 @@ def getLatestVersion(argv):
       (PLATFORM, ARCH, BITS, gConfig.VERSION,
        sys.version_info[0], sys.version_info[1], sys.version_info[2], sys.version_info[4])
 
-  # Construct "referer" to indicate usage:
-  USAGE = "unknown"
-  if argv[0] in ["c", "C", "nc", "lc", "lnc", "lC"]:
-    USAGE = "cache"
-  elif argv[0] in ["j", "J", "jd", "Jd", "jr", "Jr"]:
-    USAGE  = "dump"
-  elif argv[0] in ["p", "P"]:
-    USAGE  = "prune"
-  elif argv[0] in ["r", "R"]:
-    USAGE  = "orphan"
-  elif argv[0] in ["s", "S", "d", "f", "F", "x", "X", "Xd"]:
-    USAGE  = "db"
-  elif argv[0] in ["exec", "execw"]:
-    USAGE  = "exec"
-  elif argv[0] in ["set", "testset"]:
-    USAGE  = "set"
-  elif argv[0] in ["purge", "purgetest"]:
-    USAGE  = "purge"
-  elif argv[0] in ["qa", "qax"]:
-    USAGE  = "qa"
-  elif argv[0] == "stress-test":
-    USAGE  = "stress"
-  elif argv[0] in ["play", "playw", "stop", "pause"]:
-    USAGE  = "transport"
-  elif argv[0] in ["query", "missing", "watched",
-                   "power", "wake", "status", "monitor", "rbphdmi",
-                   "directory", "rdirectory", "sources", "remove",
-                   "vscan", "ascan", "vclean", "aclean",
-                   "duplicates", "fixurls", "imdb", "stats",
-                   "input", "screenshot", "volume", "readfile", "notify",
-                   "setsetting", "getsetting", "getsettings", "debugon", "debugoff",
-                   "version", "update", "fupdate", "config", "profiles"]:
-    USAGE  = argv[0]
-
-  analytics_url = gConfig.ANALYTICS_GOOD
-
   HEADERS = []
   HEADERS.append(("User-agent", user_agent))
-  HEADERS.append(("Referer", "http://www.%s" % USAGE))
 
   remoteVersion = remoteHash = None
 
-  # Try checking version via Analytics URL
-  (remoteVersion, remoteHash) = getLatestVersion_ex(analytics_url, headers = HEADERS)
-
-  # If the Analytics call fails, go direct to Github
-  if remoteVersion is None or remoteHash is None:
-    (remoteVersion, remoteHash) = getLatestVersion_ex("%s/%s" % (gConfig.GITHUB, "VERSION"))
+  (remoteVersion, remoteHash) = getLatestVersion_ex("%s/%s" % (gConfig.GITHUB, "VERSION"))
 
   return (remoteVersion, remoteHash)
 
