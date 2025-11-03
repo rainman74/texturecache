@@ -46,7 +46,7 @@ lock = threading.RLock()
 class MyConfiguration(object):
   def __init__(self, argv):
 
-    self.VERSION = "2.5.4"
+    self.VERSION = "2.5.7"
 
     self.GITHUB = "https://raw.github.com/xbmc/texturecache/master"
 
