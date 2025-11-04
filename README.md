@@ -129,11 +129,11 @@ Let's say the poster image for the "Dr. No" movie is corrupted, and it needs to 
 
 ```
 000226|5/596edd13.jpg|0720|1280|0011|2013-03-05 02:07:40|2013-03-04 21:27:37|nfs://192.168.0.3/mnt/share/media/Video/Movies/James Bond/Dr. No (1962)[DVDRip]-fanart.jpg
-000227|6/6f3d0d94.jpg|0512|0364|0003|2013-03-05 02:07:40|2013-03-04 22:26:38|nfs://192.168.0.3/mnt/share/media/Video/Movies/James Bond/Dr. No (1962)[DVDRip].tbn
+000227|6/6f3d0d94.jpg|0512|0364|0003|2013-03-05 02:07:40|2013-03-04 22:26:38|nfs://192.168.0.3/mnt/share/media/Video/Movies/James Bond/Dr. No (1962)[DVDRip]-poster.jpg
 Matching row ids: 226 227
 ```
 
-3) Since only the poster (.tbn) needs to be removed, executing `./texturecache.py d 227` will remove both the database row *and* the cached poster image. If we wanted to remove both images, we would simply execute `./texturecache.py d 226 227` and the two rows and their corresponding cached images would be removed.
+3) Since only the poster needs to be removed, executing `./texturecache.py d 227` will remove both the database row *and* the cached poster image. If we wanted to remove both images, we would simply execute `./texturecache.py d 226 227` and the two rows and their corresponding cached images would be removed.
 
 Now it's simply a matter of browsing the Dr. No movie in the Kodi GUI, and the image should be re-cached correctly.
 
